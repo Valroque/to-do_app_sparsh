@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>Login Panel:</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    	<script type="text/javascript" src="/Public/js/login.js"></script>
+    	<link rel="stylesheet" type="text/css" href="/Public/css/login.css">
+</head>
+<body>
+	
+	<form action="/login" method = "POST" id = "login_form">
+		<center>
+			<h1>Login Page</h1>
+			User Name: 
+			<br><input type="text" name="UserId" id="id">
+			<br>Password:
+			<br><input type="text" name="Password" id="password">
+			<br><button type="submit" id="login_button">Login</button>
+			<button type="submit" id="signup_button">SignUp</button>
+		<center>
+	</form>
+	<center><p id="status">This is the status area!!</p></center>
+
+</body>
+</html>

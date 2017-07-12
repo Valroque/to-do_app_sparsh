@@ -1,0 +1,48 @@
+body{
+  background-color: #F0F8B2;
+}
+
+textarea.display {
+  float: right;
+  padding: 50px;
+  margin: 50px 50px 500px 50px;
+  text-align: left;
+}
+
+ul li{
+  list-style: none;
+}
+
+div{
+  float :left;
+  border: 1px solid;
+  border-radius: 3px;
+  background-color: #9AAA20;
+  margin : 10px 10px 10px 0px;
+  padding: 20px;
+  text-align: center;
+  width:200px;
+            
+}
+        
+div.hide1, div.hide2{
+  width: 50%;
+  height: 400px;
+  margin-right: 450px;
+  display: none;    
+}
+
+div.hide2{
+  height: 50px;
+}
+        
+sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+form {
+  text-align: left;
+  float: right;
+  margin-right: 450px;
+}

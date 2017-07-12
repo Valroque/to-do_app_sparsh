@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>main view: Identity Panel</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    	<script type="text/javascript" src="/Public/js/scripts.js"></script>
+    	<link rel="stylesheet" type="text/css" href="/Public/css/main.css">
+	</head>
+	
+
+	<body>
+
+    	<h3> Notes : </h3>		
+		<button type="button" id="load_data_button">View Your Notes</button>
+		
+		<form action="/" method = "POST" id = "form_submit">
+				<br> Title :
+				<br><input type="text" name="Title" id="title_add">
+				<br> Your Note :
+				<br><textarea id="data_add" name="data_add" width="100px" height="100px"></textarea>
+        
+				<br><input type="button" id="submit_note_button" value="Add Note">
+		</form>
+
+    	<ul id="demo"></ul>
+
+	</body>
+
+</html>
