@@ -9,21 +9,27 @@
 	
 
 	<body>
+		<div class="on_top">
 
-    	<h3> Notes : </h3>		
-		<button type="button" id="load_data_button">View Your Notes</button>
-		
-		<form action="/" method = "POST" id = "form_submit">
+		</div>
+		<div clsss="on_right">
+			<input type="button" name="button" value="Logout" id="logout" class="custom">
+			<form action="/" method = "POST" id = "form_submit">
+				<h1> Add Notes : </h1>
 				<br> Title :
-				<br><input type="text" name="Title" id="title_add">
+				<br><input type="text" class="input_area" name="Title" id="title_add">
 				<br> Your Note :
-				<br><textarea id="data_add" name="data_add" width="100px" height="100px"></textarea>
-        
+				<br><textarea class="input_area" id="data_add" name="data_add" width="100px" height="100px"></textarea>
 				<br><input type="button" id="submit_note_button" value="Add Note">
-		</form>
+			</form>
+		</div>
 
-    	<ul id="demo"></ul>
-
+		<div class="on_left">
+			
+			<h1> Notes : </h1><br>
+			<button type="button" id="load_data_button">View Your Notes</button>
+    		<ul id="demo"></ul>
+    	<div>
 	</body>
 
 </html>
