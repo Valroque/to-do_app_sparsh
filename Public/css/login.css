@@ -1,7 +1,11 @@
 body {
 	background-color: #1BB8B4;
+	background-image: url("/Public/Images/login.jpg");
 }
 
 form {
-	margin-top: 10%;
+	margin-top: 5%;
+	
+	background-size: 10px 10px;
+	background-color: rgba(255,255,255,0.5);
 }

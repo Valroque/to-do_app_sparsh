@@ -30,13 +30,12 @@ div.on_left{
 }
 
 div.on_right{
-  
-  
+
   text-align: right;
   width:50%;
 }
 
-div.data_title, div.data_note, div.data_date, textarea.input_area, input.input_area{
+textarea.data_title, textarea.data_note, textarea.data_date, textarea.input_area, input.input_area{
   
   border: 1px solid;
   border-radius: 10px;
@@ -60,7 +59,7 @@ input.input_area{
   margin-left: 20px;
 }
         
-div.data_note, div.data_date{
+textarea.data_note, textarea.data_date{
   width: 100%;
   height: 400px;
   margin-right: 450px;
@@ -70,9 +69,10 @@ div.data_note, div.data_date{
 input.custom{
   background-color: white;
   float:right;
+  margin-right: 20px;
 }
 
-div.data_date{
+textarea.data_date{
   height: 50px;
 }
         
@@ -84,9 +84,5 @@ sub {
 form {
   text-align: left;
   float: right;
-  margin-right:300px;
-}
-
-p {
-  text-decoration-color: white;
+  margin-right:200px;
 }

@@ -2,10 +2,8 @@ $(document).bind("contextmenu", function (event) {
     event.preventDefault();    
 });
 
-
-
 $(document).ready(function(){
-
+/*
 $('#data_add').click(function(e){
     	var curr_usr_str = document.cookie;
       var curr_usr_json = {"id" : curr_usr_str.substring(3,curr_usr_str.length)};
@@ -25,7 +23,7 @@ $('#data_add').click(function(e){
             },
         });
 
-});	
+});	*/
 /*
 $('#delete_acc').click(function(e){
     
@@ -37,7 +35,7 @@ $('#logout').click(function(e){
 });
 
 $("#submit_note_button").click(function f(){
-			var url = "/user";
+			var url = "/data/insert";
       var curr_usr_str = document.cookie;
       var curr_usr_json = curr_usr_str.substring(3,curr_usr_str.length);
 
@@ -66,11 +64,14 @@ $("#submit_note_button").click(function f(){
 
 $("#load_data_button").click(function loadDoc() {
 
-      var curr_usr_str = document.cookie;
-      var curr_usr_json = {"id" : curr_usr_str.substring(3,curr_usr_str.length)};
+  var button_str = $(load_data_button).html();
+  var curr_usr_str = document.cookie;
+  var curr_usr_json = {"id" : curr_usr_str.substring(3,curr_usr_str.length)};
+
+  if(button_str == "View Your Notes"){
   
       $.ajax({
-            url: '/data',
+            url: '/data/retrieve',
             data: curr_usr_json,
             type: 'POST',
             
@@ -78,13 +79,17 @@ $("#load_data_button").click(function loadDoc() {
             success: function (data) {
                 //console.log(data);
                 
-                var length = data.length;
+                length = data.length;
                 //console.log(data[0]);
                 
                 for (i=0;i<length;i++){
         
-                  var str = '<li> <div id="data_title'+ i +'" class="data_title" >' + data[i]._source.Title + '</div> <div id="data_note'+ i +'" class="data_note" >' + data[i]._source.Note + '</div> <div id="data_date'+ i +'" class="data_date">' + data[i]._source.Date + '</div> </li>';
+                  var str = '<li> <textarea db_id="' + data[i]._id + '" id="data_title'+ i +'" class="data_title" ></textarea> <textarea id="data_note'+ i +'" class="data_note" ></textarea> <textarea id="data_date'+ i +'" class="data_date"></textarea> </li>';
                   $("#demo").append(str);
+
+                  $('#data_title'+i).val(data[i]._source.Title);
+                  $('#data_note'+i).val(data[i]._source.Note);
+                  $('#data_date'+i).val(data[i]._source.Date);
                     
                 } 
 
@@ -102,13 +107,32 @@ $("#load_data_button").click(function loadDoc() {
                   if (event.which == 3) {
               
                     if (confirm('Do you wan\'t to delete this note?')) {
-                      var id_title = $(this).attr('id');
-                      var id = id_title.substring(id_title.length-1);
-                      console.log(id);
+                      var id_title = $(this).attr('db_id');
+                      
                       $(this).siblings('.data_date').hide();
                       $(this).siblings('.data_note').hide();
                       $(this).hide();
-                  }
+
+                      $.ajax({
+                        url: '/data/delete',
+                        data: {
+                                  'type': curr_usr_str.substring(3,curr_usr_str.length),
+                                  'id' : id_title
+                              },
+                        type: 'POST',
+            
+                        //jsonpCallback: 'callback', // this is not relevant to the POST anymore
+                        success: function (data) {
+                          console.lod("note deleted");
+                        },
+
+                        error:function (xhr, status, error){
+                          console.log('Error: ' + error.message);
+                        },
+
+                      });
+
+                    }
             
                   }
                 });
@@ -119,13 +143,54 @@ $("#load_data_button").click(function loadDoc() {
                 
             },
         });
+      
        
-      var x = document.getElementById("demo");
+          $(load_data_button).html("Hide Your Data");
       
-      
-      $("#demo").empty();
-      $("#title").val("");
-      
+          $("#demo").empty();
+          $("#title").val("");
+      }
+
+      else{
+          var arr = [];
+
+          for(i=0;i<length;i++){
+            var id = $('#data_title'+i).attr('db_id');
+            arr.push({
+              'id' : id,
+              'Title' : $('#data_title'+i).val(),
+              'Note' : $('#data_note'+i).val(),
+              'Date' : $('#data_date'+i).val()
+            });
+          }
+            var update = {  "id" : curr_usr_str.substring(3,curr_usr_str.length),
+                            'size' : length,
+                            'notes' : arr
+                          };
+            console.log(update);
+          
+          
+          $.ajax({
+                url: '/data/update',
+                data: update,
+                type: 'POST',
+
+                success: function (data) {
+                  console.lod("updated");
+                },
+
+                error:function (xhr, status, error){
+                  console.log('Error: ' + error.message);
+                },
+
+          });
+
+          $('.data_title').hide();
+          $('.data_note').hide();
+          $('.data_date').hide();
+          
+          $(load_data_button).html("View Your Notes");
+      }
   });
 
 });

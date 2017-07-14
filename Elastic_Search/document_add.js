@@ -5,7 +5,7 @@ client.index({
   type: 'zaid',
   id:'1',
   body: {
-    "Title" : "Spasrh",
+    "Title" : "Spah",
     "Note" : "Jain",
     "Date" : "234"
   }

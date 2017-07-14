@@ -28,14 +28,41 @@ app.get('/', function(req, resp) {
 
 
 //---------------------------------------------------------
-/*
-app.post('/delete_acc', function(req, resp){
-  client.indices.delete({index: 'login',type : 'notes', 'id' = },function(err,resp,status) {  
-    console.log("delete :\n",resp);
-  });
-}
-*/
-app.post('/data', function(req, resp) {
+
+
+
+app.post('/data/update', function(req, resp){
+  
+  for(i=0;i<req.body.size;i++){
+    client.index({
+      index: 'user',
+      type: req.body.id,
+      id: req.body.notes[i].id,
+      body: {
+        "Title" : req.body.notes[i].Title,
+        "Note" : req.body.notes[i].Note,
+        "Date" : req.body.notes[i].Date
+      }
+      },function(err,resp,status) {
+        if(err){console.log(err)};
+      });
+  }
+});
+
+app.post('/data/delete', function(req, resp) {
+  //console.log(req.)
+  client.delete({
+    index: 'user', 
+    type: req.body.type, 
+    id: req.body.id
+    },function(err,resp,status) {  
+      if(err){
+        console.log(err);
+      }
+    });
+});
+
+app.post('/data/retrieve', function(req, resp) {
   
   client.search({
     index: 'user',
@@ -50,7 +77,7 @@ app.post('/data', function(req, resp) {
   }); 
 });
 
-app.post('/user', function(req, resp){
+app.post('/data/insert', function(req, resp){
    
   var data = {"Title" : req.body.Title,
               "Note" : req.body.Note,
@@ -62,12 +89,9 @@ app.post('/user', function(req, resp){
   type: req.body.id,
   body: data
 	},function(err,resp,status) {
-    console.log("------\n"+JSON.stringify(resp)+"-----\n");
+    if(err){console.log(err)};
 	  });
 
-  console.log("----- Req.body-----");
-  console.log(req.body);
-  console.log("----- Req.body-----");
   resp.send("done");
 
 });
@@ -78,7 +102,6 @@ app.post('/login', function(req, resp){
   var user = { "password" : req.body.password };  
 
   client.search({
-  
   index: 'login',
   type: 'notes',
   body: {
@@ -112,13 +135,14 @@ app.post('/login', function(req, resp){
           });
 
           resp.cookie('id', obj.id).send({"custom_response": "not_found"});
+        }
+        else{
+          resp.send({"custom_response": "not_found"});
+        }
       }
-      else{
-        resp.send({"custom_response": "not_found"});
-      }
-    }
     
-    else {
+    
+      else {
         if(req.body.req_type == "login"){
             //resp.send({"custom_response": "found"});
             resp.cookie('id', obj.id).send({"custom_response": "found"});
@@ -126,8 +150,8 @@ app.post('/login', function(req, resp){
         else{
             resp.send({"custom_response": "found"});
         }
+      }
     }
-  }
   });
 
 
