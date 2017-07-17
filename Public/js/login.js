@@ -5,7 +5,8 @@ $(document).ready(function(){
 		console.log("Login Clicked");
 		var id_val = $("#id").val();
 		var password_val = $("#password").val();
-		if( id_val != "" && password_val != ""){
+		
+        if( id_val != "" && password_val != ""){
 			var url_send = "/login";
 
     		var id = $('#id').val();
@@ -32,7 +33,7 @@ $(document).ready(function(){
             		console.log(data);
             		if(data.custom_response == "found"){
         				console.log("got in");
-        				window.location.href='/';
+        				window.location.href='/app';
         			}
         		
         			else {
@@ -46,13 +47,15 @@ $(document).ready(function(){
             		
         		},
     		});	
-		}
-		else{
+		
+        }else{
 			$("#status").text("Sorry, either of the fields were left blank.");
 			$("#id").val("");
 			$("#password").val("")
 		}
 	});
+
+
 	
 	$("#signup_button").click(function(){
 		console.log("Submit Clicked");
@@ -86,7 +89,7 @@ $(document).ready(function(){
             		console.log(data);
             		if(data.custom_response == "not_found"){
         				console.log("got in");
-        				window.location.href='/';
+        				window.location.href='/app';
         			}
         		
         			else {

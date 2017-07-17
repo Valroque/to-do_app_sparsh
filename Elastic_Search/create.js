@@ -1,7 +1,7 @@
 var client = require('./trial.js');
 
 client.indices.create({  
-  index: 'user'
+  index: 'login'
 },function(err,resp,status) {
   if(err) {
     console.log(err);

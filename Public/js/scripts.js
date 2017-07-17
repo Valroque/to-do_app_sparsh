@@ -31,6 +31,7 @@ $('#delete_acc').click(function(e){
 });*/
 
 $('#logout').click(function(e){
+
     window.location.href='/login';
 });
 
@@ -102,7 +103,7 @@ $("#load_data_button").click(function loadDoc() {
                 $(".data_note").click( function(){
                   $(this).siblings('.data_date').slideToggle("slow");
                 });
-
+                
                 $(".data_title").mousedown(function(event) {
                   if (event.which == 3) {
               
@@ -113,6 +114,7 @@ $("#load_data_button").click(function loadDoc() {
                       $(this).siblings('.data_note').hide();
                       $(this).hide();
 
+                      console.log(id_title);
                       $.ajax({
                         url: '/data/delete',
                         data: {
@@ -151,8 +153,43 @@ $("#load_data_button").click(function loadDoc() {
           $("#title").val("");
       }
 
-      else{
+      if(button_str == "Hide Your Data"){
           var arr = [];
+
+          $(".data_title").mousedown(function(event) {
+                  if (event.which == 3) {
+              
+                    if (confirm('Do you wan\'t to delete this note?')) {
+                      var id_title = $(this).attr('db_id');
+                      
+                      $(this).siblings('.data_date').hide();
+                      $(this).siblings('.data_note').hide();
+                      $(this).hide();
+
+                      console.log(id_title);
+                      $.ajax({
+                        url: '/data/delete',
+                        data: {
+                                  'type': curr_usr_str.substring(3,curr_usr_str.length),
+                                  'id' : id_title
+                              },
+                        type: 'POST',
+            
+                        //jsonpCallback: 'callback', // this is not relevant to the POST anymore
+                        success: function (data) {
+                          console.log("note deleted");
+                        },
+
+                        error:function (xhr, status, error){
+                          console.log('Error: ' + error.message);
+                        },
+
+                      });
+
+                    }
+            
+                  }
+          });
 
           for(i=0;i<length;i++){
             var id = $('#data_title'+i).attr('db_id');
@@ -188,6 +225,7 @@ $("#load_data_button").click(function loadDoc() {
           $('.data_title').hide();
           $('.data_note').hide();
           $('.data_date').hide();
+
           
           $(load_data_button).html("View Your Notes");
       }

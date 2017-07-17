@@ -2,13 +2,18 @@ var client = require('./trial.js');
 
 client.search({
   index: 'user',
-  type: 'notes',
-  /*body: {
-    query: {
-      match: { ".+": ".+" }
+  type: 'Sparsh',
+  body: {
+    "query": {
+      "bool": {
+        "should": [
+          { "match": { "titl":  "War and Peace" }},
+          { "match": { "author": "Leo Tolstoy"   }}
+        ]
+      }
     },
-  }*/
-},function (error, response, status) {
+  }
+},function (error, response) {
     if (error){
       console.log("search error: "+error)
     }
